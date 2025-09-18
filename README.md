@@ -14,6 +14,19 @@ Nodipar/
 ├── README.md
 ├── docs/
 │   └── Wiki.md
+├── backend/
+│   ├── AGENTS.md
+│   ├── package.json
+│   ├── prisma/
+│   │   ├── schema.prisma     # SQLite data model and Prisma enums
+│   │   └── seed.ts           # Sample data to explore the API quickly
+│   └── src/
+│       ├── app.ts            # Express application wiring & middleware stack
+│       ├── config/           # Environment parsing helpers
+│       ├── db/               # Prisma client instance
+│       ├── middleware/       # Error & 404 handlers
+│       ├── modules/          # Feature-aligned routers (posts, events, chats, ...)
+│       └── routes/           # Central router registration
 └── frontend/
     ├── AGENTS.md
     ├── package.json
@@ -33,6 +46,28 @@ npm install
 npm run dev
 ```
 The development server runs at `http://localhost:5173`. For production validation, run `npm run build`.
+
+## 🛠 Backend API
+The backend lives in `backend/` and exposes feature-aligned REST endpoints that mirror the fourteen Nodipar pillars.
+
+```bash
+cd backend
+npm install
+npx prisma generate
+npx prisma migrate dev --name init
+npx prisma db seed
+npm run dev
+```
+
+- The API boots on `http://localhost:4000` by default (configurable through `.env`).
+- `prisma/schema.prisma` models posts, events, chats, media, polls, notifications, resources, gamification, and moderation queues.
+- Each route group resides under `src/modules/<feature>/`—for example:
+  - `/posts` handles the Adda Wall (posts, comments, reactions, pinning).
+  - `/events` powers the Events Center (RSVPs, discussion threads, polls).
+  - `/chats` covers BondhoChat (direct messages, event auto-chats, reactions).
+  - `/gallery` serves media albums, Memory of the Week, and tagging.
+  - `/gamification`, `/notifications`, `/resources`, `/birthdays`, `/moderation`, and `/engagement` map directly to their feature pillars.
+- Run `npm run build` to produce the production bundle and ensure TypeScript safety before deployment.
 
 ## 🧭 Feature line-up
 | Area | What it covers |
