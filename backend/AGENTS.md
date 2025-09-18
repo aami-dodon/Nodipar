@@ -19,3 +19,4 @@ These instructions apply to all files within the `backend/` directory.
 ## Documentation
 - Document new endpoints and data contracts inside `docs/Wiki.md` under a new dated entry.
 - Update `README.md` when backend commands, environment variables, or deployment notes change.
+- Whenever you introduce infrastructure knobs (database URLs, SMTP providers, etc.), reflect them in `backend/.env.example` and the environment helper (`src/config/env.ts`).

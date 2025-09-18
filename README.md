@@ -40,14 +40,36 @@ Nodipar/
 ```
 
 ## 🚀 Getting started
-```bash
-cd frontend
-npm install
-npm run dev
-```
-The development server runs at `http://localhost:5173`. For production validation, run `npm run build`.
+1. **Install dependencies**
+   ```bash
+   cd frontend && npm install
+   cd ../backend && npm install
+   ```
+2. **Copy the environment templates**
+   ```bash
+   cp frontend/.env.example frontend/.env
+   cp backend/.env.example backend/.env
+   ```
+3. **Run the frontend**
+   ```bash
+   cd frontend
+   npm run dev
+   ```
+   The Vite dev server runs at `http://localhost:5173`.
 
-## 🛠 Backend API
+## 🧩 Environment configuration
+- **Where do `.env` files live?**
+  - Frontend variables belong in `frontend/.env` (Vite exposes them with the `VITE_` prefix).
+  - Backend variables belong in `backend/.env` and are read via `backend/src/config/env.ts`.
+- **Frontend variables** (see `frontend/.env.example`)
+  - `VITE_API_BASE_URL` — URL that the SPA uses for API calls (defaults to `http://localhost:4000`).
+  - `VITE_ENABLE_MOCK_DATA` — toggle to keep mock overlays available while the API matures.
+- **Backend variables** (see `backend/.env.example`)
+  - `PORT` — HTTP port for the Express server.
+  - `DATABASE_URL` — Prisma connection string (SQLite by default).
+  - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USERNAME`, `SMTP_PASSWORD`, `SMTP_FROM_EMAIL` — outbound mail credentials consumed by Nodipar's notification helpers.
+
+## 🛠 Backend API & database
 The backend lives in `backend/` and exposes feature-aligned REST endpoints that mirror the fourteen Nodipar pillars.
 
 ```bash
@@ -60,14 +82,34 @@ npm run dev
 ```
 
 - The API boots on `http://localhost:4000` by default (configurable through `.env`).
+- Nodipar uses a local SQLite database stored in `backend/prisma/dev.db`. Update `DATABASE_URL` if you prefer PostgreSQL or another provider.
 - `prisma/schema.prisma` models posts, events, chats, media, polls, notifications, resources, gamification, and moderation queues.
+- Run `npx prisma migrate dev` whenever you touch `prisma/schema.prisma` so the SQLite file stays in sync, and `npm run build` before deployment to type-check the project.
 - Each route group resides under `src/modules/<feature>/`—for example:
   - `/posts` handles the Adda Wall (posts, comments, reactions, pinning).
   - `/events` powers the Events Center (RSVPs, discussion threads, polls).
   - `/chats` covers BondhoChat (direct messages, event auto-chats, reactions).
   - `/gallery` serves media albums, Memory of the Week, and tagging.
   - `/gamification`, `/notifications`, `/resources`, `/birthdays`, `/moderation`, and `/engagement` map directly to their feature pillars.
-- Run `npm run build` to produce the production bundle and ensure TypeScript safety before deployment.
+
+## ✉️ SMTP setup
+1. Choose a provider (Mailtrap, Postmark, SES, Gmail App Password, etc.).
+2. Populate the SMTP fields inside `backend/.env` using the provider's credentials.
+3. If you are using Gmail, create an App Password and set `SMTP_PORT=587` with `SMTP_HOST=smtp.gmail.com`.
+4. Restart the backend (or `docker compose up`) so `backend/src/config/env.ts` picks up the new credentials.
+
+## 🐳 Running with Docker Compose
+Docker Compose can spin up both workspaces once you have copied the `.env` files.
+
+```bash
+cp frontend/.env.example frontend/.env
+cp backend/.env.example backend/.env
+docker compose up --build
+```
+
+- The frontend is available at `http://localhost:5173` and will call the backend using `VITE_API_BASE_URL` when the data layer is wired up.
+- The backend listens on `http://localhost:4000`; migrations and Prisma client generation run automatically at container start.
+- Stop the stack with `docker compose down` and rebuild after schema changes so the generated Prisma client stays in sync.
 
 ## 🧭 Feature line-up
 | Area | What it covers |

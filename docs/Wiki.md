@@ -19,3 +19,9 @@
 ## Contributing forward
 - Add new features by extending `frontend/src/features/<feature-name>/` and wiring them into `AppShell`.
 - Update this wiki entry with each significant UI or architectural enhancement.
+
+## 2024-10-12 — Environment & ops tooling
+- Documented environment variable locations and SMTP expectations in the root README.
+- Added `.env.example` templates for both the frontend (`VITE_API_BASE_URL`, `VITE_ENABLE_MOCK_DATA`) and backend (SMTP credentials).
+- Extended the backend `env` helper to surface SMTP settings to the application layer.
+- Refreshed `docker-compose.yml` to launch Node-based dev containers that generate the Prisma client and run migrations on boot.

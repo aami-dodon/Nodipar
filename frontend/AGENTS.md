@@ -17,3 +17,4 @@ These instructions apply to all files within the `frontend/` directory.
 
 ## Documentation
 - When introducing a new feature module, document it briefly in `docs/Wiki.md` and mention any data mocks you add under `src/data/`.
+- Keep `frontend/.env.example` aligned with any configuration you reference via `import.meta.env`.
