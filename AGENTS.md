@@ -10,6 +10,7 @@ These instructions apply to the entire repository unless a nested `AGENTS.md` ov
 ## Documentation expectations
 - Update `README.md` and `docs/Wiki.md` whenever you introduce, rename, or remove features, scripts, or conventions.
 - When you add workflow explanations longer than a few paragraphs, place them under `docs/wiki/` and cross-link from the README.
+- Keep `.env.example` files (frontend and backend) in sync with the variables consumed by the codebase and document the usage in the README when they change.
 
 ## Frontend workflow (`frontend/`)
 - Prefer composing UI inside feature modules and keep `src/App.tsx` focused on orchestration/layout.
