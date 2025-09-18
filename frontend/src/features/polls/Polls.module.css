@@ -1,0 +1,33 @@
+.list {
+  display: grid;
+  gap: var(--spacing-4);
+}
+
+.card {
+  background: rgba(17, 28, 61, 0.6);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-4);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  display: grid;
+  gap: var(--spacing-3);
+}
+
+.options {
+  display: grid;
+  gap: var(--spacing-3);
+}
+
+.option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(34, 211, 238, 0.12);
+  padding: var(--spacing-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(34, 211, 238, 0.25);
+}
+
+.meta {
+  font-size: 0.85rem;
+  color: var(--color-muted);
+}
