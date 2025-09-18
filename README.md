@@ -1,114 +1,59 @@
-# 🚀 PERN Project Template
+# Nodipar Alumni Hub
 
-A batteries-included starter for building apps with **Postgres**, **Express**, **React**, and **Node.js**. The backend is pre-wired to talk to external PostgreSQL and MinIO services, and the frontend is a Vite-powered React app ready for customization.
+A vibrant, mobile-first alumni experience tailored for reunions, picnics, and lifelong connections. The project now ships as a single-page React + TypeScript application (Vite) that organises every social feature into a dedicated module.
 
-## 📂 Project Structure
+## ✨ Highlights
+- **Feature-based architecture**: Each capability (Adda Wall, Events Center, BondhoChat, etc.) lives under `frontend/src/features/<feature-name>/`.
+- **Modern, vibrant UI**: Gradient surfaces, neon accents, and typography sourced from Poppins + Inter ensure a festival-ready look.
+- **Mobile-first layouts**: Every section is designed to stack gracefully on 360px screens before enhancing desktop views.
+- **Mock data playground**: `frontend/src/data/mockData.ts` centralises demo content so you can prototype interactions rapidly.
+
+## 📂 Project structure
 ```
-Pern-Template/
-├── backend/
-│   ├── src/
-│   │   ├── app.js                # Express app configuration
-│   │   ├── server.js             # Server bootstrapper
-│   │   ├── config/               # Environment + runtime configuration
-│   │   ├── routes/               # Automatic feature router loader
-│   │   ├── utils/                # Logger + connection test scripts
-│   │   └── features/             # Feature modules (health, shared connectors, …)
-│   ├── .env.example              # Backend environment template
-│   └── package.json
+Nodipar/
+├── README.md
+├── docs/
+│   └── Wiki.md
 └── frontend/
-    ├── src/                      # Vite React application
-    ├── .env.example              # Frontend environment template
-    └── package.json
+    ├── AGENTS.md
+    ├── package.json
+    └── src/
+        ├── app/              # Application shell, navigation, layout orchestrator
+        ├── components/       # Reusable UI primitives (cards, chips, avatars, etc.)
+        ├── data/             # Mock datasets powering each feature panel
+        ├── features/         # Feature modules (Adda Wall, Events Center, Gallery, ...)
+        ├── styles/           # Global design tokens & base CSS
+        └── theme/            # TypeScript access to design tokens
 ```
 
-## 📚 Template Wiki
-For a step-by-step walkthrough of the development workflow—including an end-to-end example that adds a new backend API and stitches it into the React frontend—check out the [template wiki](docs/wiki/README.md).
-
-
-## ✅ Prerequisites
-- [Node.js 18+](https://nodejs.org/) (includes npm)
-- Running PostgreSQL and MinIO instances (local or remote)
-
----
-
-## 🛠️ Backend Setup
-1. **Install dependencies**
-   ```bash
-   cd backend
-   npm install
-   ```
-2. **Configure environment variables**
-   ```bash
-   cp .env.example .env
-   # edit .env to match your infrastructure
-   ```
-   Key variables:
-   - `DATABASE_URL`: PostgreSQL connection string.
-   - `MINIO_*`: MinIO connection credentials.
-   - `CORS_ORIGIN`: URL allowed to talk to the backend (defaults to the Vite dev server).
-   - `PORT`: Port the API listens on (defaults to `5000`).
-   - `LOG_LEVEL`: Winston logger level (e.g. `error`, `warn`, `info`, `debug`).
-   - `LOG_FILE`: Optional file path for persisted logs (leave empty to log to console only).
-3. **Run connection diagnostics** (optional but recommended):
-   ```bash
-   npm run test:db         # Verifies PostgreSQL connectivity
-   npm run test:minio      # Verifies MinIO connectivity
-   npm run test:connections
-   ```
-4. **Start the backend**
-   ```bash
-   npm run dev             # Nodemon + hot reload
-   # or
-   npm start               # Plain Node.js
-   ```
-
-### 🔁 Adding new backend features
-- Create a directory inside `src/features/<feature-name>`.
-- Add one or more Express routers ending with the `.route.js` suffix (e.g. `users.route.js`).
-  These files are auto-discovered and mounted, so you never have to touch `app.js` or `server.js` again.
-- Import the shared Winston logger when you need structured logs:
-  ```js
-  const logger = require("../../utils/logger");
-  logger.info("Users endpoint hit", { userId });
-  ```
-
-### 🧠 Health Check Endpoint
-`GET /api/health` confirms connectivity to both Postgres and MinIO and responds with:
-```json
-{
-  "status": "ok",
-  "dbTime": "2025-09-17T14:23:45.123Z",
-  "minioBucket": true
-}
+## 🚀 Getting started
+```bash
+cd frontend
+npm install
+npm run dev
 ```
----
+The development server runs at `http://localhost:5173`. For production validation, run `npm run build`.
 
-## 🎨 Frontend Setup
-1. ```bash
-   cd frontend
-   npm install
-   cp .env.example .env
-   ```
-2. Update `VITE_API_BASE_URL` in `.env` to point at your backend (`http://localhost:5000` in development).
-3. Start the Vite dev server:
-   ```bash
-   npm run dev
-   ```
-   The app will be available at `http://localhost:5173` by default.
+## 🧭 Feature line-up
+| Area | What it covers |
+| --- | --- |
+| Community Feed (Adda Wall) | Posts, polls, reactions, and admin pins |
+| Announcements & News | Scheduled notices, newsboard, and alert channels |
+| Events Center | Event RSVPs, reminders, polls, and gallery highlights |
+| Photo & Media Gallery | Memory of the week, event albums, and tagging cues |
+| Messaging (BondhoChat) | Direct messages, batch groups, and event auto-chats |
+| Profiles (Amader Golpo) | Alumni bios, socials, and directory stats |
+| Polls & Surveys | Quick decisions with anonymous or open voting |
+| Gamification (Fun Zone) | Points, badges, and leaderboard snippets |
+| Notifications | Bell/email preferences, DND window, and engagement stats |
+| Search & Archive | Filters, trending tags, and archive throwbacks |
+| Shared Resources | Docs, templates, and ownership details |
+| Engagement Boosters | Throwbacks, trivia, and challenges |
+| Birthdays | Daily wall and upcoming reminders |
+| Moderation & Safety | Live reports and safety checklist |
 
----
+## 📘 Further reading
+- [docs/Wiki.md](docs/Wiki.md) records architectural decisions, feature notes, and change history.
+- `frontend/AGENTS.md` captures coding conventions for the Vite React workspace.
 
-## 📝 Logging Overview
-- Log configuration is centralized in `src/utils/logger.js`.
-- `LOG_LEVEL` controls verbosity (`info` by default).
-- Provide `LOG_FILE` in `.env` to persist logs (e.g. `logs/backend.log`). The path is resolved relative to the backend directory.
-- Use structured metadata (`logger.info("message", { key: value })`) to keep logs queryable.
-
----
-
-## 🚧 Next Steps
-- Scaffold new feature modules under `backend/src/features/` using the auto-loader.
-- Extend the React frontend to call your new endpoints.
-- Add automated tests (e.g. Jest, Vitest) as your application grows.
-
-Happy building! 🎉
+Happy building & bonding! ✨
