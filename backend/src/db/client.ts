@@ -1,5 +1,18 @@
 import { PrismaClient } from '@prisma/client';
+import { env } from '../config/env.js';
 
-const prisma = new PrismaClient();
+export const prisma = new PrismaClient({
+  datasources: {
+    db: {
+      url: env.DATABASE_URL
+    }
+  }
+});
 
-export { prisma };
+export async function connectDatabase(): Promise<void> {
+  await prisma.$connect();
+}
+
+export async function disconnectDatabase(): Promise<void> {
+  await prisma.$disconnect();
+}

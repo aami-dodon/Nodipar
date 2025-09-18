@@ -3,18 +3,17 @@
 These instructions apply to all files within the `frontend/` directory.
 
 ## Coding standards
-- Use TypeScript for all React components and utilities.
-- Organise files using the pattern `src/features/<feature-name>/<component|hooks|types>.ts(x)`.
-- Co-locate feature-specific styles using CSS Modules (`*.module.css`) or `styled` utilities inside the feature folder.
-- Shared primitives and layouts belong in `src/components/`.
+- Use React with TypeScript for all components, hooks, and utilities.
+- Organise features under `src/features/<feature-name>/` and expose shared layout primitives from `src/components/`.
+- Prefer functional components with hooks; avoid legacy class components.
 
 ## Styling
-- Global design tokens live in `src/theme/`. Prefer consuming CSS variables defined there instead of inline colour values.
-- Use mobile-first responsive styles. Every section must be readable on a 360px wide viewport before adding desktop enhancements.
+- Use CSS Modules (`*.module.css`) or the design tokens defined in `src/theme/tokens.css`.
+- Keep the UI mobile-first. Verify new screens render properly at 360px width before iterating on larger breakpoints.
 
 ## Testing & validation
-- Run `npm run lint` and `npm run build` before committing when lint scripts exist. At minimum, ensure `npm run build` passes.
+- Run `npm install` and `npm run build` before committing frontend changes.
+- If testing is introduced, ensure `npm run test` passes before submission.
 
 ## Documentation
-- When introducing a new feature module, document it briefly in `docs/Wiki.md` and mention any data mocks you add under `src/data/`.
-- Keep `frontend/.env.example` aligned with any configuration you reference via `import.meta.env`.
+- Document new features in `docs/Wiki.md` and update `frontend/.env.example` whenever configuration changes.
