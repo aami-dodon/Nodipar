@@ -1,0 +1,46 @@
+.home-landing {
+  display: grid;
+  gap: 1.5rem;
+  text-align: center;
+  color: #e2e8f0;
+}
+
+.home-landing h2 {
+  margin-bottom: 0.5rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+}
+
+.home-landing p {
+  margin: 0 auto;
+  max-width: 560px;
+  color: #cbd5f5;
+}
+
+.feature-grid {
+  display: grid;
+  gap: 1rem;
+}
+
+.feature-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.feature-card h3 {
+  margin: 0 0 0.5rem;
+  color: #f1f5f9;
+}
+
+.feature-card p {
+  margin: 0;
+  color: #cbd5f5;
+}
+
+@media (min-width: 768px) {
+  .feature-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

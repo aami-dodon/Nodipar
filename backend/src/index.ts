@@ -1,8 +1,18 @@
-import { env } from './config/env';
-import { createApp } from './app';
+import { createApp } from './app.js';
+import { env } from './config/env.js';
+import { connectDatabase } from './db/client.js';
 
-const app = createApp();
+async function bootstrap() {
+  try {
+    await connectDatabase();
+    const app = createApp();
+    app.listen(env.PORT, () => {
+      console.log(`API server ready at http://localhost:${env.PORT}`);
+    });
+  } catch (error) {
+    console.error('Failed to start server', error);
+    process.exit(1);
+  }
+}
 
-app.listen(env.port, () => {
-  console.log(`Nodipar backend listening on port ${env.port}`);
-});
+void bootstrap();
